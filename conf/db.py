@@ -1,7 +1,16 @@
+# db.py або config.py
+import os
+from dotenv import load_dotenv
 from sqlalchemy import create_engine
+from sqlalchemy.orm import sessionmaker
 from sqlalchemy.orm import sessionmaker, DeclarativeBase
 
-SQLALCHEMY_DATABASE_URL = f"postgresql+psycopg2://postgres:567234@db:5432/hw02"
+load_dotenv()
+
+SQLALCHEMY_DATABASE_URL = os.getenv("DB_URL")
+
+if not SQLALCHEMY_DATABASE_URL:
+    raise ValueError("DB_URL is not set in environment variables")
 
 
 engine = create_engine(SQLALCHEMY_DATABASE_URL, echo=True, max_overflow=5)
